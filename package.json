@@ -1,0 +1,26 @@
+{
+  "name": "St8less",
+  "version": "0.2.0",
+  "description": "Allows to extract some functions from javascript sources by provided criteria and put them in separate js - to simplify live reload",
+  "main": "index.js",
+  "scripts": {
+    "opencover": "istanbul cover node_modules/mocha/bin/_mocha && start coverage\\lcov-report\\index.html",
+    "test": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+  },
+  "keywords": [
+    "livereload",
+    "javascript"
+  ],
+  "author": "Alexey Grishin",
+  "license": "MIT",
+  "dependencies": {
+    "escodegen": "^1.6.1",
+    "esprima": "^2.2.0",
+    "merge": "^1.2.0"
+  },
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "istanbul": "^0.3.14",
+    "mocha": "^2.2.5"
+  }
+}
