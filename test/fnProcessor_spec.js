@@ -3,13 +3,14 @@ var process = require('../src/fnProcessor');
 var esprima = require('esprima');
 var escodegen = require('escodegen');
 
-var BODY = " " +
+var BODY = " var nameE; " +
     "    function nameA() { return 1; }" +
     "    function nameB() {'__attribute_B'; return 2;}" +
     "    var object = {" +
     "        nameC: function() {return 3;}," +
     "        nameD: function(argD) {return 4;}" +
-    "    }";
+    "    };" +
+    "    nameE = function() { return 5; }";
 
 describe("fn processor", function() {
 
@@ -20,23 +21,23 @@ describe("fn processor", function() {
         process(parsed, function (fn) {
             names.push(fn.name);
         });
-        expect(names).to.eql(["nameA", "nameB", "nameC", "nameD"]);
+        expect(names).to.eql(["nameA", "nameB", "nameC", "nameD", "nameE"]);
 
     });
     it("shall provide correct fn attributes", function () {
         var attrs = [];
         process(parsed, function (fn) { attrs.push(fn.attribute); });
-        expect(attrs).to.eql([null, "__attribute_B", null, null]);
+        expect(attrs).to.eql([null, "__attribute_B", null, null, null]);
     });
     it("shall provide correct argument names", function () {
         var args = [];
         process(parsed, function (fn) { args.push(fn.paramNames); });
-        expect(args).to.eql([[], [], [], ["argD"]]);
+        expect(args).to.eql([[], [], [], ["argD"], []]);
     });
     it("shall provide correct body", function () {
         var bodies = [];
         process(parsed, function (fn, body) { bodies.push(escodegen.generate(body, {format: {compact: true}})); });
-        expect(bodies).to.eql(["{return 1;}", "{'__attribute_B';return 2;}", "{return 3;}", "{return 4;}"]);
+        expect(bodies).to.eql(["{return 1;}", "{'__attribute_B';return 2;}", "{return 3;}", "{return 4;}", "{return 5;}"]);
     });
     it("shall replace body", function () {
         process(parsed, function (fn, body, replace) {
@@ -44,7 +45,7 @@ describe("fn processor", function() {
         });
         var bodies = [];
         process(parsed, function (fn, body) { bodies.push(escodegen.generate(body, {format: {compact: true}})); });
-        expect(bodies).to.eql(["{'nameA'}", "{'nameB'}", "{'nameC'}", "{'nameD'}"]);
+        expect(bodies).to.eql(["{'nameA'}", "{'nameB'}", "{'nameC'}", "{'nameD'}", "{'nameE'}"]);
 
     })
 })
