@@ -87,7 +87,6 @@ Extractor options:
    * `paramNames` - argument names
    * `externalVariables` - variable/fn names used in function but not declared inside
    By default extractor looks for functions with `__stateless` attribute
- * `append` - what to append to the file with extracted functions
  * `objectName` - object ot store extracted functions. Default is `St8less`
  * `globalName` - global object to use in calls. Default is `window`
 

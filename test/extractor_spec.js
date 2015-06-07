@@ -40,7 +40,7 @@ describe("splitter", function () {
     }
 
     var resFile1, resFile2, resStateless;
-    var OPTS = {globalName: "MyGlobal", append: "MyGlobal.done = true;", objectName: "abc"};
+    var OPTS = {globalName: "MyGlobal", objectName: "abc"};
 
     it("shall process 2 files without error", function () {
         "use strict";
@@ -55,7 +55,6 @@ describe("splitter", function () {
         var allTogether = ["var MyGlobal = {};", resFile1, resFile2, resStateless, "return MyGlobal;"].join("\n");
         var fn = new Function(allTogether);
         var globalObj = fn();
-        expect(globalObj.done).to.be.ok();
         expect(globalObj.abc).to.be.ok();
         expect(Object.keys(globalObj.abc).length).to.be(2);
     });

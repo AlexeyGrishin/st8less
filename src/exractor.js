@@ -22,7 +22,6 @@ function defaultCriteria(fnDescr) {
  * Extracts marked functions from provided files to separate one
  * @param {Object} options
  * @param {CriteriaFn} options.criteria which functions shall be extracted
- * @param {String} options.append what to append to the file with extracted functions
  * @param {String} options.objectName object ot store extracted functions. Default is `St8less`
  * @param {String} options.globalName global object to use in calls. Default is `window`
  * @constructor
@@ -42,7 +41,6 @@ function defaultCriteria(fnDescr) {
 function Extractor(options) {
     this.options = merge({
         criteria: defaultCriteria,
-        append: "",
         objectName: "St8less",
         globalName: "window"
     }, options || {});
@@ -80,7 +78,6 @@ Extractor.prototype = {
             this.options.fullObjectName + " = {};"
         ]
             .concat(this.collectedFns)
-            .concat([this.options.append])
             .join("\n\n");
         cb(null, body);
     }
