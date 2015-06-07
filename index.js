@@ -1,4 +1,4 @@
 "use strict";
 
-var Extractor = require('./src/splitter');
+var Extractor = require('./src/exractor');
 module.exports = Extractor;

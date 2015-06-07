@@ -13,11 +13,35 @@ function defaultCriteria(fnDescr) {
     return fnDescr.attribute === "__st8less" || fnDescr.attribute === "__stateless";
 }
 
+/**
+ * @callback CriteriaFn
+ * @param {FnDescription} function description
+ */
 
-function Splitter(options) {
+/**
+ * Extracts marked functions from provided files to separate one
+ * @param {Object} options
+ * @param {CriteriaFn} options.criteria which functions shall be extracted
+ * @param {String} options.append what to append to the file with extracted functions
+ * @param {String} options.objectName object ot store extracted functions. Default is `St8less`
+ * @param {String} options.globalName global object to use in calls. Default is `window`
+ * @constructor
+ *
+ * @example
+ * var ex = new Extractor();
+ * ex.parse(fs.readFileSync('file1.js'), function (err, changed) {
+ *   fs.writeFileSync('file1_changed.js', changed);
+ *   ex.parse(fs.readFileSync('file2.js'), function (err, changed) {
+ *     fs.writeFileSync('file2_changed.js', changed);
+ *     ex.done(function (err, extracted) {
+ *       fs.writeFileSync('extracted.js', extracted);
+ *     });
+ *   });
+ * });
+ */
+function Extractor(options) {
     this.options = merge({
         criteria: defaultCriteria,
-        encoding: "UTF-8",
         append: "",
         objectName: "St8less",
         globalName: "window"
@@ -27,7 +51,7 @@ function Splitter(options) {
 }
 
 
-Splitter.prototype = {
+Extractor.prototype = {
 
     _addFn: function (fnDescr, fnBody) {
         var name = fnDescr.name + this.collectedFns.length,
@@ -62,4 +86,4 @@ Splitter.prototype = {
     }
 };
 
-module.exports = Splitter;
+module.exports = Extractor;

@@ -8,7 +8,28 @@ function exclude(array1, array2) {
     });
 }
 
+/**
+ * @callback OnFunctionCallback
+ * @param {FnDescription} fnDescription
+ * @param {Object} function body
+ * @param {ReplacementCallback} could be called to replace function body
+ *
+ * @callback ReplacementCallback
+ * @param {Object} node to replace the function body
+ *
+ * @namespace FnDescription
+ * @property {String} name function name (or property/variable name that holds the function)
+ * @property {String} attribute attribute defined as string expression at beggining of function
+ * @property {Array,<String>} paramNames argument names
+ * @property {Array,<String>} externalVariables variable/fn names used in function but not declared inside
+ */
 
+/**
+ * Iterates over parsed code, looks for functions and calls callback on each of them
+ * @param {Object} parsedCode parsed code
+ * @param {OnFunctionCallback} onFn
+ *
+ */
 module.exports = function processFunctions(parsedCode, onFn) {
 
     var stack = [], fnCollector;

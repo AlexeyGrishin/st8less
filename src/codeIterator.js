@@ -1,5 +1,20 @@
 "use strict";
 
+/**
+ * Iterates over parsed js code and calls provided parser on nodes with expected type
+ * @param {Object} code parsed js code
+ * @param {Object} parser is an object with keys equal to node types and values are functions with two arguments - node and cb for further processing.
+ *
+ * Example of parser object:
+ * {
+ *  "VariableDeclaration": function (node, next) {
+ *    if (node...) {
+ *      next(node.right)
+ *    }
+ *  }
+ * }
+ *
+ */
 module.exports = function iterate(code, parser) {
 
     function goChildren(node) {

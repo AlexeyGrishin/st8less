@@ -60,6 +60,11 @@ VarCollector.prototype = {
 
 };
 
+/**
+ * Collects identifiers used in the code and not defined inside it - so here could be variables available from closures, global variables, etc.
+ * @param parsedCode
+ * @returns {Array.<String>} identifiers (variable names)
+ */
 module.exports = function collectVars(parsedCode) {
     var vc = new VarCollector();
     iterate(parsedCode, vc);
