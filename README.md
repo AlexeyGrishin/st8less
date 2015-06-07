@@ -68,16 +68,16 @@ MyGlobal.abc.myRand1 = function (Math){
 ## How to use
 
 ```javascript
- * var ex = new Extractor();
- * ex.parse(fs.readFileSync('file1.js'), function (err, changed) {
- *   fs.writeFileSync('file1_changed.js', changed);
- *   ex.parse(fs.readFileSync('file2.js'), function (err, changed) {
- *     fs.writeFileSync('file2_changed.js', changed);
- *     ex.done(function (err, extracted) {
- *       fs.writeFileSync('extracted.js', extracted);
- *     });
- *   });
- * });
+ var ex = new Extractor();
+ ex.parse(fs.readFileSync('file1.js'), function (err, changed) {
+   fs.writeFileSync('file1_changed.js', changed);
+   ex.parse(fs.readFileSync('file2.js'), function (err, changed) {
+     fs.writeFileSync('file2_changed.js', changed);
+     ex.done(function (err, extracted) {
+       fs.writeFileSync('extracted.js', extracted);
+     });
+   });
+ });
 ```
 
 Extractor options:
