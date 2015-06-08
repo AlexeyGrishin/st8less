@@ -16,6 +16,13 @@ VarCollector.prototype = {
         this.onUse(node.name);
     },
 
+    "ObjectExpression": function (node, next) {
+        if (node.computed === true) {
+            next(node.property);
+        }
+        next(node.value);
+    },
+
     onDeclare: function (name) {
         this.declaredVars[name] = true;
         delete this.vars[name];
