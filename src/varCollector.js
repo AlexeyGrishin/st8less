@@ -16,7 +16,7 @@ VarCollector.prototype = {
         this.onUse(node.name);
     },
 
-    "ObjectExpression": function (node, next) {
+    "Property": function (node, next) {
         if (node.computed === true) {
             next(node.property);
         }

@@ -48,7 +48,6 @@ describe("splitter", function () {
             resFile1 = rf1;
             resFile2 = rf2;
             resStateless = rs;
-            console.log(File1, "\n\n", File2, "\n\n",  resFile1, "\n\n", resFile2, "\n\n", resStateless);
         })
     });
     it("shall be executable after splitting", function () {
