@@ -48,7 +48,7 @@ module.exports = function processFunctions(parsedCode, onFn) {
             stack.pop();
         },
         "AssignmentExpression": function (node, next) {
-            stack.push(node.left.name);
+            stack.push(node.left.name || (node.left.property && node.left.property.name));
             next(node.right);
             stack.pop();
         },
