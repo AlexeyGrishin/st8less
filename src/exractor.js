@@ -51,8 +51,8 @@ function Extractor(options) {
 
 Extractor.prototype = {
 
-    _addFn: function (fnDescr, fnBody) {
-        var name = fnDescr.name + this.collectedFns.length,
+    _addFn: function (fnDescr, fnBody, fnPrefix) {
+        var name = (fnPrefix || '') + fnDescr.name + this.collectedFns.length,
             fullName = this.options.fullObjectName + "." + name,
             paramList = fnDescr.paramNames.concat(fnDescr.externalVariables).join(', ');
         this.collectedFns.push([
@@ -62,11 +62,23 @@ Extractor.prototype = {
         return fullName + ".apply(this, [" + paramList + "])";
     },
 
-    parse: function (src, cb) {
+    /**
+     * Parses provided code (as string), finds functions that match criteria, extracts them
+     * and inserts call to extracted fns into original body.
+     * @param {String} src source code
+     * @param {Object} options - optional options
+     * @param {String} options.prefix - prefix to add for extracted functions
+     * @param cb
+     */
+    parse: function (src, options, cb) {
+        if (typeof options === 'function') {
+            cb = options;
+            options = {};
+        }
         var parsed = esprima.parse(src, {loc: true, comment: true}), fnCall;
         processFunctions(parsed, function (fnDescr, fnBody, replace) {
             if (this.options.criteria(fnDescr)) {
-                fnCall = this._addFn(fnDescr, fnBody);
+                fnCall = this._addFn(fnDescr, fnBody, options ? options.prefix : undefined);
                 replace(parseExpressionOnly("return " + fnCall));
             }
         }.bind(this));

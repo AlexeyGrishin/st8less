@@ -1,6 +1,6 @@
 {
   "name": "st8less",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Allows to extract some functions from javascript sources by provided criteria and put them in separate js - to simplify live reload",
   "main": "index.js",
   "scripts": {

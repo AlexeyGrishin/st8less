@@ -69,10 +69,22 @@ describe("splitter", function () {
         expect(called).to.be.ok();
     });
     it("shall process files with default options as well", function () {
-        "use strict";
         split2files(undefined, File1, File2, function (r1,r2,rs) {
            //ok
         });
+    });
+    it("shall use specified prefixes", function () {
+        var splitter = new Splitter(OPTS);
+        var rfs;
+        splitter.parse(File1, {prefix: "xyz_"}, function (err, res) {
+            if (err) throw err;
+        });
+        splitter.done(function (err, res) {
+            if (err) throw err;
+            rfs = res;
+        });
+        var globalObj = (new Function("var MyGlobal={};" + rfs + "; return MyGlobal;" ))();
+        expect(Object.keys(globalObj.abc)[0]).to.match(/xyz_/)
     })
 
-})
+});
