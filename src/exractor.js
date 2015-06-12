@@ -87,7 +87,7 @@ Extractor.prototype = {
 
     done: function (cb) {
         var body = [
-            this.options.fullObjectName + " = {};"
+            this.options.fullObjectName + " = " + this.options.fullObjectName + " || {};"
         ]
             .concat(this.collectedFns)
             .join("\n\n");

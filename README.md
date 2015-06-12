@@ -71,7 +71,7 @@ MyGlobal.abc.myRand1 = function (Math){
  var ex = new Extractor();
  ex.parse(fs.readFileSync('file1.js'), function (err, changed) {
    fs.writeFileSync('file1_changed.js', changed);
-   ex.parse(fs.readFileSync('file2.js'), function (err, changed) {
+   ex.parse(fs.readFileSync('file2.js'), {prefix: "functions_from_file2_"}, function (err, changed) {
      fs.writeFileSync('file2_changed.js', changed);
      ex.done(function (err, extracted) {
        fs.writeFileSync('extracted.js', extracted);
